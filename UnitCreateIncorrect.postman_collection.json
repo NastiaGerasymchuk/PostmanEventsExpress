@@ -1,0 +1,410 @@
+{
+	"info": {
+		"_postman_id": "9f367e1f-3671-4c3e-91f8-06927b7b3182",
+		"name": "UnitCreateIncorrect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"UNIT_OF_MEASURING_TOKEN\", pm.response.json().token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{ADMIN_EMAIL}}\",\r\n  \"password\": \"{{ADMIN_PASSWORD}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{AUTHENTICATION_URL}}/{{LOGIN_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{AUTHENTICATION_URL}}",
+						"{{LOGIN_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE_SHORT_UNIT_OF_MEASURING",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"UNIT_OF_MEASURING_ID\", String(jsonData));\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    pm.response.to.be.badRequest;    \r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response).to.be.string;\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"ErrorMessage\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var errorMessage=pm.environment.get(\"UNIT_NAME_ERROR_MESSAGE\");\r",
+							"    pm.expect(jsonData.errors.unitName.includes(errorMessage)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"function setEnvironment(envValue,outName){\r",
+							"   var outValue= pm.iterationData.get(outName);\r",
+							"   pm.environment.set(envValue,outValue); \r",
+							"}\r",
+							"setEnvironment(\"UNIT_SHORT_NAME\",\"UnitNameShortLength\");\r",
+							"setEnvironment(\"UNIT_NAME_ERROR_MESSAGE\",\"UnitNameShortBigLengthMessage\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"unitName\": \"{{UNIT_SHORT_NAME}}\",\r\n     \"shortName\": \"{{SHORT_NAME}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_CREATE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_CREATE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE_BIG_UNIT_OF_MEASURING",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"UNIT_OF_MEASURING_ID\", String(jsonData));\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    pm.response.to.be.badRequest;    \r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response).to.be.string;\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"ErrorMessage\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var errorMessage=pm.environment.get(\"UNIT_NAME_ERROR_MESSAGE\");\r",
+							"    pm.expect(jsonData.errors.unitName.includes(errorMessage)).to.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function setEnvironment(envValue,outName){\r",
+							"   var outValue= pm.iterationData.get(outName);\r",
+							"   pm.environment.set(envValue,outValue); \r",
+							"}\r",
+							"setEnvironment(\"UNIT_BIG_NAME\",\"UnitNameBigLength\");\r",
+							"setEnvironment(\"UNIT_NAME_ERROR_MESSAGE\",\"UnitNameShortBigLengthMessage\");\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"unitName\": \"{{UNIT_BIG_NAME}}\",\r\n    \"shortName\": \"{{SHORT_NAME}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_CREATE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_CREATE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE_EMPTY_UNIT_OF_MEASURING",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"UNIT_OF_MEASURING_ID\", String(jsonData));\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    pm.response.to.be.badRequest;    \r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response).to.be.string;\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"ErrorMessage\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var errorMessage=pm.environment.get(\"UNIT_NAME_ERROR_MESSAGE\");\r",
+							"    pm.expect(jsonData.errors.unitName.includes(errorMessage)).to.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function setEnvironment(envValue,outName){\r",
+							"   var outValue= pm.iterationData.get(outName);\r",
+							"   pm.environment.set(envValue,outValue); \r",
+							"}\r",
+							"setEnvironment(\"UNIT_EMPTY_NAME\",\"UnitNameEmpty\");\r",
+							"setEnvironment(\"UNIT_NAME_ERROR_MESSAGE\",\"UnitEmptyMessage\");\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"unitName\": \"{{UNIT_EMPTY_NAME}}\",\r\n    \"shortName\": \"{{SHORT_NAME}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_CREATE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_CREATE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE_WITHOUT_LETTERS_UNIT_OF_MEASURING",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"UNIT_OF_MEASURING_ID\", String(jsonData));\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    pm.response.to.be.badRequest;    \r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response).to.be.string;\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"ErrorMessage\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var errorMessage=pm.environment.get(\"UNIT_NAME_ERROR_MESSAGE\");\r",
+							"    pm.expect(jsonData.errors.unitName.includes(errorMessage)).to.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function setEnvironment(envValue,outName){\r",
+							"   var outValue= pm.iterationData.get(outName);\r",
+							"   pm.environment.set(envValue,outValue); \r",
+							"}\r",
+							"setEnvironment(\"UNIT_NOT_LETTERS_NAME\",\"UnitNotLetters\");\r",
+							"setEnvironment(\"UNIT_NAME_ERROR_MESSAGE\",\"UnitNotConsistsOfLetters\");\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"unitName\": \"{{UNIT_NOT_LETTERS_NAME}}\",\r\n    \"shortName\": \"{{SHORT_NAME}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_CREATE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_CREATE_URL}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
