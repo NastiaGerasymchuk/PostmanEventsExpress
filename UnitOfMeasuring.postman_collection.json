@@ -1,0 +1,614 @@
+{
+	"info": {
+		"_postman_id": "4fab51af-4320-42dd-909f-a18dc8d3ac69",
+		"name": "UnitOfMeasuring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"UNIT_OF_MEASURING_TOKEN\", pm.response.json().token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{ADMIN_EMAIL}}\",\r\n  \"password\": \"{{ADMIN_PASSWORD}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{AUTHENTICATION_URL}}/{{LOGIN_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{AUTHENTICATION_URL}}",
+						"{{LOGIN_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_UNITS_OF_MEASURING",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test('Schema is valid', function () {\r",
+							"    var schema = pm.globals.get(\"UNIT_OF_MEASURING_SCHEMA\");\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{ALL_UNIT_OF_MEASURING_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{ALL_UNIT_OF_MEASURING_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE_CORRECT_UNIT_OF_MEASURING",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"UNIT_OF_MEASURING_ID\", pm.response.json());\r",
+							"//pm.environment.set(\"UNIT_OF_MEASURING_ID\", JSON.stringify(pm.response.json()));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.ok;    \r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response).to.be.string;\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"unitName\": \"{{UNIT_NAME}}\",\r\n     \"shortName\": \"{{SHORT_NAME}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_CREATE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_CREATE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE_EXISTING_UNIT_OF_MEASURING",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"      pm.response.to.be.badRequest;   \r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    var existUnitMessage=pm.environment.get(\"EXIST_UNIT_OF_MEASURING_MESSAGE\");\r",
+							"    pm.expect(pm.response.text()).to.include(existUnitMessage);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"unitName\": \"{{UNIT_NAME}}\", \"shortName\": \"{{SHORT_NAME}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_CREATE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_CREATE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EDIT_UNIT_OF_MEASURING",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.ok;    \r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"Body has string value\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response).to.be.string;    \r",
+							"});\r",
+							"pm.test(\"Response has id of editing unit\", function () {\r",
+							"    var unitId = pm.environment.get(\"UNIT_OF_MEASURING_ID\");\r",
+							"    pm.expect(pm.response.text()).to.include(unitId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": \"{{UNIT_OF_MEASURING_ID}}\",\r\n\"unitName\": \"{{EDITED_UNIT_NAME}}\",\r\n\"shortName\": \"{{EDITED_SHORT_NAME}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_EDIT_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_EDIT_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_UNIT_OF_MEASURING",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var id=pm.variables.get(\"UNIT_OF_MEASURING_ID\");\r",
+							"pm.environment.set(\"UNIT_OF_MEASURING_ID\", JSON.stringify(id));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UNIT_OF_MEASURING_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_DELETE_URL}}/{{UNIT_OF_MEASURING_ID}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_DELETE_URL}}",
+						"{{UNIT_OF_MEASURING_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGOUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.response.to.be.withBody;   \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 100ms\", function () {\r",
+							"var timeLogOut=Number(pm.variables.get(\"LOGOUT_TIME_RESPONSE\"));\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(timeLogOut);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response message\", function () {\r",
+							"    var responseMessage = pm.environment.get(\"LOGOUT_MESSAGE\");\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(responseMessage);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{EVENT_TOKEN}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/{{LOGOUT_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{LOGOUT_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_UNITS_OF_MEASURING_UNAUTHORIZED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{ALL_UNIT_OF_MEASURING_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{ALL_UNIT_OF_MEASURING_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE_CORRECT_UNIT_OF_MEASURING_UNAUTHORIZED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"unitName\": \"{{UNIT_NAME}}\",\r\n     \"shortName\": \"{{SHORT_NAME}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_CREATE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_CREATE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EDIT_UNIT_OF_MEASURING_UNAUTHORIZED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": \"{{UNIT_OF_MEASURING_ID}}\",\r\n\"shortName\": {{EDITED_SHORT_NAME}},\r\n\"unitName\": {{EDITED_UNIT_NAME}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_EDIT_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_EDIT_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_UNIT_OF_MEASURING_UNAUTHORIZED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_URL}}/{{UNIT_OF_MEASURING_URL}}/{{UNIT_OF_MEASURING_DELETE_URL}}/{{UNIT_OF_MEASURING_ID}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_URL}}",
+						"{{UNIT_OF_MEASURING_URL}}",
+						"{{UNIT_OF_MEASURING_DELETE_URL}}",
+						"{{UNIT_OF_MEASURING_ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
