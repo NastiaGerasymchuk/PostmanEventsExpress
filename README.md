@@ -1,19 +1,23 @@
 # PostmanEventsExpress
-
+1. Item 1
+1. Item 2
+1. Item 3
+   1. Item 3a
+   1. Item 3b
 
 Before running the tests you need to Download and Run project ... 
 
-1.Clone this repositiry
+1. Clone this repositiry
 
-1.Steps fir import collections to Postman 
+1. Steps fir import collections to Postman 
 
-  1.Select file from menu
+   1. Select file from menu
 
-  1.Select Import
+   1. Select Import
 
-  1.Choose Collection
+   1. Choose Collection
 
-  1.Click import button
+   1. Click import button
  ![image](https://user-images.githubusercontent.com/70840510/114297070-427b4680-9ab7-11eb-9a14-af98ed2f98b2.png)
 
 
