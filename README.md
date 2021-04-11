@@ -22,7 +22,7 @@ Before running the tests you need to Download and Run project ...
 
 * UnitOfMeasuringValidation.csv is test data for ShortCreateIncorrect and UnitCreateIncorrect collections
 
-1. Steps for running collections are:
+ 4. Steps for running collections are:
   
    1. Click Select file
   
