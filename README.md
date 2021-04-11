@@ -5,9 +5,23 @@ Before running the tests you need to Download and Run project ...
 
 1.Clone this repositiry
 
-2.addEvent.csv is test data for Events collection
+1.Steps fir import collections to Postman 
 
-3.UnitOfMeasuringValidation.csv is test data for ShortCreateIncorrect and UnitCreateIncorrect collections
+  1.Select file from menu
+
+  1.Select Import
+
+  1.Choose Collection
+
+  1.Click import button
+ ![image](https://user-images.githubusercontent.com/70840510/114297070-427b4680-9ab7-11eb-9a14-af98ed2f98b2.png)
+
+
+3. Test data fo collections:
+
+* addEvent.csv is test data for Events collection
+
+* UnitOfMeasuringValidation.csv is test data for ShortCreateIncorrect and UnitCreateIncorrect collections
 
 4. Steps for running collections are:
   
