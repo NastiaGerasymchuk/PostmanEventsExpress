@@ -2,9 +2,9 @@
 
 Before running the tests you need to Download and Run project https://github.com/NastiaGerasymchuk/EventsExpress 
 
-1. Clone this repositiry
+#### 1. Clone this repositiry
 
-1. Steps fir import collections to Postman 
+#### 1. Steps for import collections to Postman 
 
    1. Select file from menu
 
@@ -16,13 +16,13 @@ Before running the tests you need to Download and Run project https://github.com
  ![image](https://user-images.githubusercontent.com/70840510/114297070-427b4680-9ab7-11eb-9a14-af98ed2f98b2.png)
 
 
-1. Test data fo collections:
+#### 1. Test data fo collections:
 
-* addEvent.csv is test data for Events collection
+   * addEvent.csv is test data for Events collection
 
-* UnitOfMeasuringValidation.csv is test data for ShortCreateIncorrect and UnitCreateIncorrect collections
+   * UnitOfMeasuringValidation.csv is test data for ShortCreateIncorrect and UnitCreateIncorrect collections
 
- 4. Steps for running collections are:
+ #### 1. Steps for running collections are:
   
    1. Click Select file
   
