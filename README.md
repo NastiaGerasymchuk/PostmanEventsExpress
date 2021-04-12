@@ -1,6 +1,6 @@
 # PostmanEventsExpress
 
-Before running the tests you need to Download and Run project ... 
+Before running the tests you need to Download and Run project https://github.com/NastiaGerasymchuk/EventsExpress 
 
 1. Clone this repositiry
 
